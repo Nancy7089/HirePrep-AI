@@ -1,16 +1,36 @@
-import express from "express"
-import connectDb from "./config/connectDb.js"
-import dotenv from "dotenv"
-dotenv.config()
-const app = express()
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
-const PORT = process.env.PORT || 8000
+import connectDb from "./config/connectDb.js";
+import authRouter from "./routes/authRoute.js";
+import userRouter from "./routes/user.route.js";
+import interviewRouter from "./routes/interviewRouter.js";
 
-app.get("/", (req, res) => {
-    return res.json({ message: "Server is running" })
-})
+dotenv.config();
+
+const app = express();
+
+// ✅ FIXED CORS
+app.use(cors({
+  origin: "https://ai-interview-agent-9.onrender.com",
+  credentials: true
+}));
+
+// ✅ Middleware first
+app.use(express.json());
+app.use(cookieParser());
+
+
+connectDb();
+
+
+app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
+app.use("/api/interview",interviewRouter)
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-    connectDb()
-})
+  console.log(`Server running on port ${PORT}`);
+});
