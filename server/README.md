@@ -24,27 +24,27 @@ flowchart TD
     Client([Client / Frontend]) -- HTTP Request --> ExpressApp["Express App<br>(server/index.js)"]
     
     %% Global Middleware
-    ExpressApp --> GlobalMiddleware[Global Middlewares\ncors, express.json, cookieParser]
-    GlobalMiddleware --> Routes[Route Definitions\n/api/*]
+    ExpressApp --> GlobalMiddleware["Global Middlewares<br>cors, express.json, cookieParser"]
+    GlobalMiddleware --> Routes["Route Definitions<br>/api/*"]
     
     %% Routing and Middleware
     Routes --> RouteMatch{Route Found?}
-    RouteMatch -- Yes --> AuthMiddle[Middleware\n(e.g., isAuth, multer)]
-    AuthMiddle -- Invalid Token / File --> ErrorRes[401 / 400 Error Response]
+    RouteMatch -- Yes --> AuthMiddle["Middleware<br>(e.g., isAuth, multer)"]
+    AuthMiddle -- Invalid Token / File --> ErrorRes["401 / 400 Error Response"]
     
     %% Controller Logic
-    AuthMiddle -- Valid --> Controller[Controller Logic\n(e.g., interview.controllers.js)]
+    AuthMiddle -- Valid --> Controller["Controller Logic<br>(e.g., interview.controllers.js)"]
     
     %% External Services
-    Controller <--> |API Call| Service[External Service\nopenRouter.service.js]
-    Service <--> |HTTP Request| ExternalAI[OpenRouter API / GPT-4o-mini]
+    Controller <--> |API Call| Service["External Service<br>openRouter.service.js"]
+    Service <--> |HTTP Request| ExternalAI["OpenRouter API / GPT-4o-mini"]
     
     %% Database Interaction
-    Controller <--> |Mongoose Queries| DBModels[Mongoose Models\nUser / Interview]
+    Controller <--> |Mongoose Queries| DBModels["Mongoose Models<br>User / Interview"]
     DBModels <--> MongoDB[(MongoDB Database)]
     
     %% Response
-    Controller --> |Data Formatting| JSONRes[JSON Response]
+    Controller --> |Data Formatting| JSONRes["JSON Response"]
     JSONRes --> ExpressApp
     ExpressApp --> Client
 ```
