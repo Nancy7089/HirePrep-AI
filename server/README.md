@@ -21,7 +21,7 @@ The backend of HirePrep-AI is built on Node.js and Express.js, utilizing MongoDB
 ```mermaid
 flowchart TD
     %% Incoming Request
-    Client([Client / Frontend]) -- HTTP Request --> ExpressApp[Express App<br/>(server/index.js)]
+    Client([Client / Frontend]) -- HTTP Request --> ExpressApp[Express App<br>(server/index.js)]
     
     %% Global Middleware
     ExpressApp --> GlobalMiddleware[Global Middlewares\ncors, express.json, cookieParser]
